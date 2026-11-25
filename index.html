@@ -352,7 +352,15 @@ kbd{font-family:var(--ui);font-size:.66rem;font-weight:700;border:1px solid var(
 .io{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
 .io.in{opacity:1;transform:none}
 /* ============ САЛЮТ-ОВЕРЛЕЙ ============ */
-.cheer{position:fixed;inset:0;z-index:55;display:grid;place-items:center;text-align:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .6s;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--bg0) 32%,transparent),color-mix(in srgb,var(--bg0) 78%,transparent))}
+.cheer{position:fixed;inset:0;z-index:55;display:grid;place-items:safe center;overflow:auto;text-align:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .5s;background:radial-gradient(ellipse 85% 65% at 50% 38%,color-mix(in srgb,var(--aur2) 26%,#06070f) 0%,#05060e 58%,#010207 100%)}
+.cheer{--muted:#c3cbe8;--faint:#8b93b8}
+.light .cheer{--acc:#38bdf8;--acc2:#a78bfa;--acc3:#f472b6;--warn:#fbbf24}
+.light .cheer .hbtn.primary{color:#06121f}
+#cheerSound{position:fixed;top:.9rem;right:.9rem;z-index:2;padding:.5rem;font-size:.8rem;color:#eaf0ff;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22)}
+#cheerSound.muted{color:#9aa3c4}
+#cheerSound .ic-off{display:none}
+#cheerSound.muted .ic-on{display:none}
+#cheerSound.muted .ic-off{display:block}
 .cheer.open{opacity:1;pointer-events:auto}
 .cheer-in{transform:scale(.85);transition:transform .7s cubic-bezier(.22,1.4,.36,1)}
 .cheer.open .cheer-in{transform:scale(1)}
@@ -589,6 +597,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 </main>
 
 <div class="cheer" id="cheer" role="dialog" aria-modal="false" aria-label="С Новым годом">
+  <button class="hbtn" id="cheerSound" aria-label="Выключить звук" title="Звук (M)">
+    <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.4 5.6a9 9 0 0 1 0 12.8"/></svg>
+    <svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>
+  </button>
   <div class="cheer-in">
     <span class="cheer-tag" id="cheerTag">полночь в вашем поясе</span>
     <div class="cheer-year" id="cheerYear">2027</div>
@@ -1124,7 +1136,8 @@ function frame(t){
   renderTime(diff);
   const sec=Math.floor(diff/1000);
   if(sec!==lastSec){lastSec=sec;onSecond(diff,now);}
-  drawFX(t);drawBurst(t);
+  if(cheerOpen){if(!fxCleared){fctx.clearRect(0,0,W,H);fxCleared=true;}}else drawFX(t);
+  drawBurst(t);
   lastDiff=diff;
 }
 let autoCheck=0;
@@ -1247,10 +1260,13 @@ function toggleSound(){
 function bindEvents(){
   $('#btnSettings').addEventListener('click',()=>drawerOpen?closeDrawer():openDrawer());
   $('#btnClose').addEventListener('click',closeDrawer);
+  $('#cheerSound').addEventListener('click',toggleSound);
   scrim.addEventListener('click',closeDrawer);
   $('#tzPill').addEventListener('click',()=>{openDrawer();setTimeout(()=>$('#tzSelect').focus(),400);});
   $('#cheerClose').addEventListener('click',closeCheer);
   $('#btnSound').addEventListener('click',toggleSound);
+  const cs=document.getElementById('cheerSound');
+  if(cs){cs.classList.toggle('muted',!cfg.sound);cs.setAttribute('aria-label',cfg.sound?'Выключить звук':'Включить звук');}
   $('#swSound').addEventListener('click',toggleSound);
   const bf=$('#btnFull');
   if(!document.documentElement.requestFullscreen)bf.style.display='none';
