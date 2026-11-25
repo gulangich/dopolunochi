@@ -360,6 +360,12 @@ kbd{font-family:var(--ui);font-size:.66rem;font-weight:700;border:1px solid var(
 .toplink{display:inline-flex;align-items:center;gap:.35rem;color:var(--muted);text-decoration:none;font-weight:700;transition:color .2s}
 .toplink:hover{color:var(--acc)}
 .toplink svg{width:13px;height:13px}
+.fnote{margin-top:.85rem;display:flex;justify-content:center}
+.donate{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.4rem;text-align:center;font-size:.7rem;font-weight:600;line-height:1.5;color:var(--muted);text-decoration:none;transition:color .2s}
+.donate em{font-style:normal;font-weight:400}
+.donate svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:fill .25s,transform .25s}
+.donate:hover{color:var(--acc3)}
+.donate:hover svg{fill:color-mix(in srgb,var(--acc3) 45%,transparent);transform:scale(1.18)}
 /* ---- появление ---- */
 .reveal{animation:fadeUp .8s cubic-bezier(.22,1,.36,1) both;animation-delay:var(--d,0s)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
@@ -607,6 +613,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
       <span>❄ настройки хранятся в этом браузере · клик по фону — искры</span>
       <span class="keys"><kbd>S</kbd> оформление <kbd>M</kbd> звук <kbd>F</kbd> салют <kbd>R</kbd> случайный стиль</span>
       <a class="toplink" href="#top">наверх <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+    </div>
+    <div class="wrap fnote">
+      <a class="donate" href="https://pay.cloudtips.ru/p/08d39f9d" target="_blank" rel="noopener noreferrer" title="Откроется в новой вкладке">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <span>Поддержать проект</span>
+        <em>— на оплату домена и мотивацию на новые таймеры</em>
+      </a>
     </div>
   </footer>
 </main>
